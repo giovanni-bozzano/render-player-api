@@ -79,6 +79,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Shadow
     private List<ModelRenderer> modelRenderers;
     private PlayerModelAPI<T> playerModelAPI;
+    private boolean callReal;
 
     public MixinPlayerModel(float modelSize)
     {
@@ -131,7 +132,10 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Inject(method = "accept", at = @At("HEAD"), cancellable = true)
     public void beforeAccept(ModelRenderer renderer, CallbackInfo callbackInfo)
     {
-        PlayerModelAPI.beforeAccept(callbackInfo, this, renderer);
+        if (!this.callReal) {
+            PlayerModelAPI.beforeAccept(callbackInfo, this, renderer);
+        }
+        this.callReal = false;
     }
 
     @Inject(method = "accept", at = @At("RETURN"))
@@ -143,6 +147,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Override
     public void realAccept(ModelRenderer renderer)
     {
+        this.callReal = true;
         this.accept(renderer);
     }
 
@@ -184,7 +189,10 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Inject(method = "getRandomModelRenderer", at = @At("HEAD"), cancellable = true)
     public void beforeGetRandomModelRenderer(Random random, CallbackInfoReturnable<ModelRenderer> callbackInfo)
     {
-        PlayerModelAPI.beforeGetRandomModelRenderer(callbackInfo, this, random);
+        if (!this.callReal) {
+            PlayerModelAPI.beforeGetRandomModelRenderer(callbackInfo, this, random);
+        }
+        this.callReal = false;
     }
 
     @Inject(method = "getRandomModelRenderer", at = @At("RETURN"))
@@ -196,6 +204,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Override
     public ModelRenderer realGetRandomModelRenderer(Random random)
     {
+        this.callReal = true;
         return this.getRandomModelRenderer(random);
     }
 
@@ -221,7 +230,10 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Inject(method = "renderCape", at = @At("HEAD"), cancellable = true)
     public void beforeRenderCape(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, CallbackInfo callbackInfo)
     {
-        PlayerModelAPI.beforeRenderCape(callbackInfo, this, matrixStack, buffer, packedLight, packedOverlay);
+        if (!this.callReal) {
+            PlayerModelAPI.beforeRenderCape(callbackInfo, this, matrixStack, buffer, packedLight, packedOverlay);
+        }
+        this.callReal = false;
     }
 
     @Inject(method = "renderCape", at = @At("RETURN"))
@@ -233,6 +245,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Override
     public void realRenderCape(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay)
     {
+        this.callReal = true;
         this.renderCape(matrixStack, buffer, packedLight, packedOverlay);
     }
 
@@ -244,7 +257,10 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Inject(method = "renderEars", at = @At("HEAD"), cancellable = true)
     public void beforeRenderEars(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, CallbackInfo callbackInfo)
     {
-        PlayerModelAPI.beforeRenderEars(callbackInfo, this, matrixStack, buffer, packedLight, packedOverlay);
+        if (!this.callReal) {
+            PlayerModelAPI.beforeRenderEars(callbackInfo, this, matrixStack, buffer, packedLight, packedOverlay);
+        }
+        this.callReal = false;
     }
 
     @Inject(method = "renderEars", at = @At("RETURN"))
@@ -256,6 +272,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Override
     public void realRenderEars(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay)
     {
+        this.callReal = true;
         this.renderEars(matrixStack, buffer, packedLight, packedOverlay);
     }
 
@@ -295,7 +312,10 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Inject(method = "setRotationAngles", at = @At("HEAD"), cancellable = true)
     public void beforeSetRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float headYaw, float headPitch, CallbackInfo callbackInfo)
     {
-        PlayerModelAPI.beforeSetRotationAngles(callbackInfo, this, entity, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch);
+        if (!this.callReal) {
+            PlayerModelAPI.beforeSetRotationAngles(callbackInfo, this, entity, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch);
+        }
+        this.callReal = false;
     }
 
     @Inject(method = "setRotationAngles", at = @At("RETURN"))
@@ -307,6 +327,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Override
     public void realSetRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float headYaw, float headPitch)
     {
+        this.callReal = true;
         this.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch);
     }
 
@@ -324,7 +345,10 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Inject(method = "setVisible", at = @At("HEAD"), cancellable = true)
     public void beforeSetVisible(boolean visible, CallbackInfo callbackInfo)
     {
-        PlayerModelAPI.beforeSetVisible(callbackInfo, this, visible);
+        if (!this.callReal) {
+            PlayerModelAPI.beforeSetVisible(callbackInfo, this, visible);
+        }
+        this.callReal = false;
     }
 
     @Inject(method = "setVisible", at = @At("RETURN"))
@@ -336,6 +360,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Override
     public void realSetVisible(boolean visible)
     {
+        this.callReal = true;
         this.setVisible(visible);
     }
 
@@ -353,7 +378,10 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Inject(method = "translateHand", at = @At("HEAD"), cancellable = true)
     public void beforeTranslateHand(HandSide side, MatrixStack matrixStack, CallbackInfo callbackInfo)
     {
-        PlayerModelAPI.beforeTranslateHand(callbackInfo, this, side, matrixStack);
+        if (!this.callReal) {
+            PlayerModelAPI.beforeTranslateHand(callbackInfo, this, side, matrixStack);
+        }
+        this.callReal = false;
     }
 
     @Inject(method = "translateHand", at = @At("RETURN"))
@@ -365,6 +393,7 @@ public abstract class MixinPlayerModel<T extends LivingEntity> extends BipedMode
     @Override
     public void realTranslateHand(HandSide side, MatrixStack matrixStack)
     {
+        this.callReal = true;
         this.translateHand(side, matrixStack);
     }
 

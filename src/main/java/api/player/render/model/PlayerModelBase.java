@@ -92,7 +92,9 @@ public abstract class PlayerModelBase<T extends LivingEntity>
         PlayerModelBase<T> overwritten = this.internalPlayerModelAPI.getOverwrittenAccept(this);
 
         if (overwritten == null) {
-            ((IPlayerModelReal<T>) this.iPlayerModel).realAccept(renderer);
+            if (this.iPlayerModel instanceof IPlayerModelReal) {
+                ((IPlayerModelReal<T>) this.iPlayerModel).realAccept(renderer);
+            }
         } else if (overwritten != this) {
             overwritten.accept(renderer);
         }
@@ -159,7 +161,10 @@ public abstract class PlayerModelBase<T extends LivingEntity>
         PlayerModelBase<T> overwritten = this.internalPlayerModelAPI.getOverwrittenGetRandomModelRenderer(this);
 
         if (overwritten == null) {
-            return ((IPlayerModelReal<T>) this.iPlayerModel).realGetRandomModelRenderer(random);
+            if (this.iPlayerModel instanceof IPlayerModelReal) {
+                return ((IPlayerModelReal<T>) this.iPlayerModel).realGetRandomModelRenderer(random);
+            }
+            return null;
         } else if (overwritten != this) {
             return overwritten.getRandomModelRenderer(random);
         } else {
@@ -203,7 +208,9 @@ public abstract class PlayerModelBase<T extends LivingEntity>
         PlayerModelBase<T> overwritten = this.internalPlayerModelAPI.getOverwrittenRenderCape(this);
 
         if (overwritten == null) {
-            ((IPlayerModelReal<T>) this.iPlayerModel).realRenderCape(matrixStack, buffer, packedLight, packedOverlay);
+            if (this.iPlayerModel instanceof IPlayerModelReal) {
+                ((IPlayerModelReal<T>) this.iPlayerModel).realRenderCape(matrixStack, buffer, packedLight, packedOverlay);
+            }
         } else if (overwritten != this) {
             overwritten.renderCape(matrixStack, buffer, packedLight, packedOverlay);
         }
@@ -224,7 +231,9 @@ public abstract class PlayerModelBase<T extends LivingEntity>
         PlayerModelBase<T> overwritten = this.internalPlayerModelAPI.getOverwrittenRenderEars(this);
 
         if (overwritten == null) {
-            ((IPlayerModelReal<T>) this.iPlayerModel).realRenderEars(matrixStack, buffer, packedLight, packedOverlay);
+            if (this.iPlayerModel instanceof IPlayerModelReal) {
+                ((IPlayerModelReal<T>) this.iPlayerModel).realRenderEars(matrixStack, buffer, packedLight, packedOverlay);
+            }
         } else if (overwritten != this) {
             overwritten.renderEars(matrixStack, buffer, packedLight, packedOverlay);
         }
@@ -287,7 +296,11 @@ public abstract class PlayerModelBase<T extends LivingEntity>
         PlayerModelBase<T> overwritten = this.internalPlayerModelAPI.getOverwrittenSetRotationAngles(this);
 
         if (overwritten == null) {
-            ((IPlayerModelReal<T>) this.iPlayerModel).realSetRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch);
+            if (this.iPlayerModel instanceof IPlayerModelReal) {
+                ((IPlayerModelReal<T>) this.iPlayerModel).realSetRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch);
+            } else {
+                this.iPlayerModel.superSetRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch);
+            }
         } else if (overwritten != this) {
             overwritten.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, headYaw, headPitch);
         }
@@ -308,7 +321,11 @@ public abstract class PlayerModelBase<T extends LivingEntity>
         PlayerModelBase<T> overwritten = this.internalPlayerModelAPI.getOverwrittenSetVisible(this);
 
         if (overwritten == null) {
-            ((IPlayerModelReal<T>) this.iPlayerModel).realSetVisible(visible);
+            if (this.iPlayerModel instanceof IPlayerModelReal) {
+                ((IPlayerModelReal<T>) this.iPlayerModel).realSetVisible(visible);
+            } else {
+                this.iPlayerModel.superSetVisible(visible);
+            }
         } else if (overwritten != this) {
             overwritten.setVisible(visible);
         }
@@ -329,7 +346,9 @@ public abstract class PlayerModelBase<T extends LivingEntity>
         PlayerModelBase<T> overwritten = this.internalPlayerModelAPI.getOverwrittenTranslateHand(this);
 
         if (overwritten == null) {
-            ((IPlayerModelReal<T>) this.iPlayerModel).realTranslateHand(side, matrixStack);
+            if (this.iPlayerModel instanceof IPlayerModelReal) {
+                ((IPlayerModelReal<T>) this.iPlayerModel).realTranslateHand(side, matrixStack);
+            }
         } else if (overwritten != this) {
             overwritten.translateHand(side, matrixStack);
         }
