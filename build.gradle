@@ -67,7 +67,7 @@ minecraft {
 }
 
 mixin {
-    add sourceSets.main, 'mixins.playerapi.refmap.json'
+    add sourceSets.main, 'mixins.renderplayerapi.refmap.json'
 }
 
 repositories {

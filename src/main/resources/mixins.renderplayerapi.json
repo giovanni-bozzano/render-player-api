@@ -2,6 +2,7 @@
   "package": "api.player.render.asm.mixins",
   "compatibilityLevel": "JAVA_8",
   "refmap": "mixins.renderplayerapi.refmap.json",
+  "minVersion" : "0.8",
   "client": [
     "net.minecraft.client.renderer.entity.MixinPlayerRenderer",
     "net.minecraft.client.renderer.entity.model.MixinPlayerModel",
